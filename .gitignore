@@ -1,0 +1,23 @@
+﻿# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Virtual environment
+venv/
+.venv/
+
+# Database
+*.db
+*.sqlite
+
+# Testing
+.pytest_cache/
+.coverage
+
+# Bob
+.bob/
+
+# OS
+.DS_Store
+Thumbs.db

@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %}Login — Banking App{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center mt-5">
+    <div class="col-sm-10 col-md-6 col-lg-5 col-xl-4">
+
+        <div class="card shadow-sm">
+            <div class="card-body p-4">
+
+                <h4 class="card-title text-center mb-4">
+                    🏦 Customer Login
+                </h4>
+
+                {% if error %}
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    {{ error }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                {% endif %}
+
+                <form action="/login" method="POST" novalidate>
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Username</label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="username"
+                            name="username"
+                            placeholder="Enter username"
+                            autocomplete="username"
+                            required
+                        />
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="password" class="form-label">Password</label>
+                        <input
+                            type="password"
+                            class="form-control"
+                            id="password"
+                            name="password"
+                            placeholder="Enter password"
+                            autocomplete="current-password"
+                            required
+                        />
+                    </div>
+
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            Sign In
+                        </button>
+                    </div>
+                </form>
+
+            </div><!-- /card-body -->
+        </div><!-- /card -->
+
+        <p class="text-center text-muted mt-3" style="font-size: 0.85rem;">
+            Demo credentials: <strong>demo</strong> / <strong>password123</strong>
+        </p>
+
+    </div>
+</div>
+{% endblock %}
