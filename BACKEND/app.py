@@ -22,7 +22,7 @@ from flask import (
 )
 
 # ---------------------------------------------------------------------------
-# Path setup — allow importing from BACKEND/ regardless of working directory.
+# Path setup - allow importing from BACKEND/ regardless of working directory.
 # ---------------------------------------------------------------------------
 _BACKEND_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, _BACKEND_DIR)
@@ -51,7 +51,7 @@ init_db()
 
 @app.route("/")
 def index():
-    """Root URL — redirect straight to /login."""
+    """Root URL - redirect straight to /login."""
     return redirect(url_for("login"))
 
 
@@ -134,14 +134,26 @@ def deposit_route():
 def withdraw_route():
     raw_amount = request.form.get("amount", "").strip()
 
+    # Validation check 1: amount field must not be empty
     if not raw_amount:
-        flash("Please enter a withdrawal amount.", "error")
+        flash("Amount is required", "error")
         return redirect(url_for("dashboard"))
 
     try:
         amount = float(raw_amount)
     except ValueError:
         flash("Withdrawal amount must be a valid number.", "error")
+        return redirect(url_for("dashboard"))
+
+    # Validation check 2: amount must be a positive number
+    if amount <= 0:
+        flash("Amount must be greater than zero", "error")
+        return redirect(url_for("dashboard"))
+
+    # Validation check 3: amount must not exceed current balance
+    account = get_account(session["user_id"])
+    if account and amount > account["balance"]:
+        flash("Insufficient funds", "error")
         return redirect(url_for("dashboard"))
 
     success, message = withdraw(session["user_id"], amount)
